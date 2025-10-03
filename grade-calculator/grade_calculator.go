@@ -1,5 +1,7 @@
 package esepunittests
 
+//import "fmt"
+
 type GradeCalculator struct {
 	assignments []Grade
 	exams       []Grade
@@ -40,6 +42,7 @@ func NewGradeCalculator() *GradeCalculator {
 
 func (gc *GradeCalculator) GetFinalGrade() string {
 	numericalGrade := gc.calculateNumericalGrade()
+	//fmt.Println(numericalGrade)
 
 	if numericalGrade >= 90 {
 		return "A"
@@ -57,11 +60,15 @@ func (gc *GradeCalculator) GetFinalGrade() string {
 func (gc *GradeCalculator) AddGrade(name string, grade int, gradeType GradeType) {
 	switch gradeType {
 	case Assignment:
-		gc.assignments = append(gc.assignments, Grade{
-			Name:  name,
-			Grade: grade,
-			Type:  Assignment,
-		})
+		newAssignment := Grade{Name: name, Grade: grade, Type: gradeType}
+		//fmt.Println(newAssignment)
+		gc.assignments = append(gc.assignments, newAssignment)
+		//fmt.Println(gc.assignments)
+		//gc.assignments = append(gc.assignments, Grade{
+		//	Name:  name,
+		//	Grade: grade,
+		//	Type:  Assignment,
+		//})
 	case Exam:
 		gc.exams = append(gc.exams, Grade{
 			Name:  name,
@@ -78,9 +85,12 @@ func (gc *GradeCalculator) AddGrade(name string, grade int, gradeType GradeType)
 }
 
 func (gc *GradeCalculator) calculateNumericalGrade() int {
+	//fmt.Println(gc.assignments)
 	assignment_average := computeAverage(gc.assignments)
+	//fmt.Println(assignment_average)
 	exam_average := computeAverage(gc.exams)
-	essay_average := computeAverage(gc.exams)
+	// Changed from exams to essays
+	essay_average := computeAverage(gc.essays)
 
 	weighted_grade := float64(assignment_average)*.5 + float64(exam_average)*.35 + float64(essay_average)*.15
 
@@ -89,9 +99,15 @@ func (gc *GradeCalculator) calculateNumericalGrade() int {
 
 func computeAverage(grades []Grade) int {
 	sum := 0
+	//fmt.Printf("%+v\n", grades)
+	//fmt.Println(grades[0].Grade)
 
-	for grade, _ := range grades {
-		sum += grade
+	// For Loop now calculates the grade value
+	for i := 0; i < len(grades); i++ {
+		//fmt.Println(grade)
+		//fmt.Println(name)
+		sum += grades[i].Grade
+		//fmt.Println(sum)
 	}
 
 	return sum / len(grades)
