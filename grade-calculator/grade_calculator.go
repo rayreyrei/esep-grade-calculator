@@ -60,15 +60,15 @@ func (gc *GradeCalculator) GetFinalGrade() string {
 func (gc *GradeCalculator) AddGrade(name string, grade int, gradeType GradeType) {
 	switch gradeType {
 	case Assignment:
-		newAssignment := Grade{Name: name, Grade: grade, Type: gradeType}
+		//newAssignment := Grade{Name: name, Grade: grade, Type: gradeType}
 		//fmt.Println(newAssignment)
-		gc.assignments = append(gc.assignments, newAssignment)
+		//gc.assignments = append(gc.assignments, newAssignment)
 		//fmt.Println(gc.assignments)
-		//gc.assignments = append(gc.assignments, Grade{
-		//	Name:  name,
-		//	Grade: grade,
-		//	Type:  Assignment,
-		//})
+		gc.assignments = append(gc.assignments, Grade{
+		  Name:  name,
+			Grade: grade,
+			Type:  Assignment,
+		})
 	case Exam:
 		gc.exams = append(gc.exams, Grade{
 			Name:  name,
